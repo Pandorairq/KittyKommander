@@ -1,10 +1,10 @@
 using Movement.States;
 using UnityEngine;
 
-namespace Reset.InputControllers
+namespace Movement.InputControllers
 {
     public abstract class InputController : MonoBehaviour
-    {
+    { 
         public abstract InputData GetInput();
     }
 }

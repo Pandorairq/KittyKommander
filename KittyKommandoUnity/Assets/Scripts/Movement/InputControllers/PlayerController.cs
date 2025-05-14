@@ -1,28 +1,51 @@
+using System;
 using Movement.States;
-using Rewired;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
-namespace Reset.InputControllers
+namespace Movement.InputControllers
 {
     public class PlayerController : InputController
     {
-        [SerializeField] private int playerID = 0;
-        private Player player;
-
+        private PlayerInputActions inputAction;
+        private InputData input;
+        
         public override InputData GetInput()
         {
-            var input = new InputData
-            {
-                HorizontalInput = player.GetAxis("Move Horizontal"),
-                JumpInput = player.GetButton("Jump")
-            };
             return input;
         }
 
-        void Start()
+        private void Awake()
         {
-            player = ReInput.players.GetPlayer(playerID);
+            inputAction = new PlayerInputActions();
+        }
+        private void Update()
+        {
+            input.HorizontalInput = inputAction.Player.HorizontalMovement.ReadValue<float>();
         }
 
+        private void OnEnable()
+        {
+            inputAction.Enable();
+            inputAction.Player.Jump.performed += OnJumpPressed;
+            inputAction.Player.Jump.canceled += OnJumpReleased;
+        }
+
+        private void OnDisable()
+        {
+            inputAction.Disable();
+            inputAction.Player.Jump.performed -= OnJumpPressed;
+            inputAction.Player.Jump.canceled -= OnJumpReleased;
+        }
+
+        private void OnJumpPressed(InputAction.CallbackContext context)
+        {
+            input.JumpInput = true;
+        }
+
+        private void OnJumpReleased(InputAction.CallbackContext context)
+        {
+            input.JumpInput = false;
+        }
     }
 }

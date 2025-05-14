@@ -1,4 +1,5 @@
 using System;
+using Movement.InputControllers;
 using Movement.States;
 using Reset.InputControllers;
 using UnityEngine;
@@ -18,7 +19,6 @@ namespace Movement
 
         [SerializeField] private InputController inputController;
         [SerializeField] private Rigidbody2D r; 
-        [SerializeField] private Animator animator;
         
         void Start()
         {
@@ -38,54 +38,9 @@ namespace Movement
         {
             EvaluateInput();
             var viewDirection = state.Update(this, Time.fixedDeltaTime);
-            animator.SetFloat("VerticalDirection", viewDirection);
             print(state);
         }
-
-        private string Test()
-        {
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Running"))
-            {
-                return "Player is running right";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standing"))
-            {
-                return "Player is standing right";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping"))
-            {
-                return "Player is jumping right";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Falling"))
-            {
-                return "Player is Falling right";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Turning Right"))
-            {
-                return "Player is turning right";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Running Mirrored"))
-            {
-                return "Player is running left";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Standing Mirrored"))
-            {
-                return "Player is standing left";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Jumping Mirrored"))
-            {
-                return "Player is jumping left";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Falling Mirrored"))
-            {
-                return "Player is Falling left";
-            }
-            if (animator.GetCurrentAnimatorStateInfo(0).IsName("Turning left"))
-            {
-                return "Player is turning left";
-            } 
-            return "";
-        }
+        
         
         public bool IsGrounded()
         {
@@ -101,7 +56,7 @@ namespace Movement
         }
         public void Move(Vector3 direction)
         {
-            r.velocity = new Vector3(direction.x * movementSpeed, direction.y * inAirSpeed, direction.z * movementSpeed);
+            r.linearVelocity = new Vector3(direction.x * movementSpeed, direction.y * inAirSpeed, direction.z * movementSpeed);
             //   transform.Translate(new Vector3(direction.x * movementSpeed, direction.y, direction.z * movementSpeed) * deltaTime,Space.World);
         }
     
@@ -136,7 +91,6 @@ namespace Movement
 
         private void InitializeState(MovementState s)
         {
-            animator.SetInteger("PlayerState", s.GetStateID());
             state = s;
             state.OnStateEnter(this);
         }
