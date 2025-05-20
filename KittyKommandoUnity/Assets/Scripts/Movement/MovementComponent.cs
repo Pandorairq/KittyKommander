@@ -68,13 +68,11 @@ namespace Movement
 
         public void CollisionEnter(CollisionData collisionData)
         {
-            print(collisionData.Direction);
             var s = state.OnCollisionEnter(collisionData);
             SwitchToNewState(s);
         }
         public void CollisionExit(CollisionData collisionData)
         {
-            print(collisionData.Direction);
             var s = state.OnCollisionExit(collisionData);
             SwitchToNewState(s);
         }
