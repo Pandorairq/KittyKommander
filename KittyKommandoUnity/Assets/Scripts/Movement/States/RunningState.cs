@@ -46,15 +46,15 @@ namespace Movement.States
 
         public override void OnStateExit(MovementComponent movementComponent) { }
 
-        public override MovementState OnCollisionEnter(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
             //if (collisionData.IsStair) return new WalkingStairState();
             return null;
         }
 
-        public override MovementState OnCollisionExit(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionExit(CollisionData collisionData)
         { 
-            if(collisionDirection == CollisionHit.Bottom) return new FallingState(Vector3.zero);
+            if(collisionData.Direction == CollisionDirection.Bottom) return new FallingState(Vector3.zero);
             return null;
         }
 

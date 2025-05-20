@@ -43,12 +43,13 @@ namespace Movement.States
         public override void OnStateExit(MovementComponent movementComponent)
         {
         }
-        public override MovementState OnCollisionEnter(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
-            return collisionDirection == CollisionHit.Top && collisionData.IsSolid ? new FallingState(Vector3.zero) : null;
+            //return collisionData.Direction == CollisionDirection.Top && collisionData.IsSolid ? new FallingState(Vector3.zero) : null;
+            return collisionData.Direction == CollisionDirection.Top  ? new FallingState(Vector3.zero) : null;
         }
 
-        public override MovementState OnCollisionExit(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionExit(CollisionData collisionData)
         {
             return null;
         }

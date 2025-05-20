@@ -16,13 +16,12 @@ namespace Movement.States
             };
         }
 
-        public override float Update(MovementComponent movementComponent, float deltaTime)
+        public override void Update(MovementComponent movementComponent, float deltaTime)
         {
-            var viewDirection = MoveDirection.x;
+            viewDirection = MoveDirection.x;
             movementComponent.Move(MoveDirection + ExternalForce);
             MoveDirection = Vector3.zero;
             ExternalForce = Vector3.zero;
-            return viewDirection;
         }
 
         public override void OnStateEnter(MovementComponent movementComponent)
@@ -35,12 +34,12 @@ namespace Movement.States
             
         }
 
-        public override MovementState OnCollisionEnter(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
             return null;
         }
 
-        public override MovementState OnCollisionExit(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionExit(CollisionData collisionData)
         {
             return null;
         }

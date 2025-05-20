@@ -9,6 +9,7 @@ namespace Movement
 {
     
     [RequireComponent(typeof(InputController))]
+    [RequireComponent(typeof(CollisionDetection))]
     public class MovementComponent : MonoBehaviour
     {
         [SerializeField] private float movementSpeed;
@@ -18,6 +19,7 @@ namespace Movement
         private MovementState state;
 
         [SerializeField] private InputController inputController;
+        [SerializeField] private CollisionDetection collisionDetection;
         [SerializeField] private Rigidbody2D r; 
         
         void Start()
@@ -31,14 +33,13 @@ namespace Movement
             var inputData = inputController.GetInput();
             var s = state.HandleInput(this, inputData);
             SwitchToNewState(s);
-        
         }
 
         void FixedUpdate()
         {
             EvaluateInput();
-            var viewDirection = state.Update(this, Time.fixedDeltaTime);
-            print(state);
+            state.Update(this, Time.fixedDeltaTime);
+            collisionDetection.CheckCollisions();
         }
         
         
@@ -65,14 +66,16 @@ namespace Movement
             return state;
         }
 
-        public void CollisionEnter(CollisionHit hit, CollisionData collisionData)
+        public void CollisionEnter(CollisionData collisionData)
         {
-            var s = state.OnCollisionEnter(hit, collisionData);
+            print(collisionData.Direction);
+            var s = state.OnCollisionEnter(collisionData);
             SwitchToNewState(s);
         }
-        public void CollisionExit(CollisionHit hit, CollisionData collisionData)
+        public void CollisionExit(CollisionData collisionData)
         {
-            var s = state.OnCollisionExit(hit, collisionData);
+            print(collisionData.Direction);
+            var s = state.OnCollisionExit(collisionData);
             SwitchToNewState(s);
         }
         public bool HasState(Type stateType)
@@ -111,5 +114,16 @@ namespace Movement
             SwitchToNewState(new StandingState());
         }
 
+        private void OnEnable()
+        {
+            collisionDetection.CollisionEnter.AddListener(CollisionEnter);
+            collisionDetection.CollisionExit.AddListener(CollisionExit);
+        }
+
+        private void OnDisable()
+        {
+            collisionDetection.CollisionEnter.AddListener(CollisionEnter);
+            collisionDetection.CollisionExit.AddListener(CollisionExit);
+        }
     }
 }

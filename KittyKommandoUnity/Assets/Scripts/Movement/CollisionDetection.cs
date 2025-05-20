@@ -1,15 +1,12 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using Reset;
-using Unity.VisualScripting;
 using UnityEngine;
-using UnityEngine.Tilemaps;
+using UnityEngine.Events;
 
 namespace Movement
-{
-    
+{ 
     [Serializable] 
-    public enum CollisionHit
+    public enum CollisionDirection
     {
         Top,
         Bottom,
@@ -19,55 +16,73 @@ namespace Movement
 
     public struct CollisionData
     {
+        public bool IsHit;
+        public CollisionDirection Direction;
         public bool IsSolid;
     }
+    
     public class CollisionDetection : MonoBehaviour
     {
-        [SerializeField] private CollisionHit hitDirection;
-        [SerializeField] private MovementComponent movementComponent;
-        private int numberOfCollidersTouching;
-        private void OnCollisionEnter2D(Collision2D other)
+        public UnityEvent<CollisionData> CollisionEnter = new ();
+        public UnityEvent<CollisionData> CollisionExit = new ();
+        
+        [SerializeField] private LayerMask collisionLayer;
+        [SerializeField] private float castDistance = 0.1f;
+        [SerializeField] private Vector2 size;
+        [SerializeField] private float shrinkMargin;
+        [SerializeField] private new Collider2D collider;
+
+        private CollisionData[] collisions;
+        public void Start()
         {
-            if(other.gameObject.GetComponent<IgnoreCollision>()) return;
-            if(numberOfCollidersTouching++ != 0) return;
+
+            collisions = new CollisionData[4];
+        }
+
+        public void CheckCollisions()
+        {
+            Vector2 castOrigin = (Vector2)transform.position + collider.offset;
             
-            var collisionData = new CollisionData
-            {
-                IsSolid = true
-            };
-            movementComponent.CollisionEnter(hitDirection, collisionData);
+            Vector2 offset = new Vector2(0, size.y / 4);
+            Vector2 castSize = new Vector2(size.x - shrinkMargin, size.y / 2); 
+            RaycastHit2D hitUp = Physics2D.BoxCast(castOrigin + offset, castSize, 0f, Vector2.up, castDistance, collisionLayer);
+            RaycastHit2D hitDown = Physics2D.BoxCast(castOrigin - offset, castSize, 0f, Vector2.down, castDistance, collisionLayer);
+            
+            /*
+            offset = new Vector2(size.x / 4, 0);
+            castSize = new Vector2(size.x / 2, size.y - shrinkMargin); 
+            RaycastHit2D hitRight = Physics2D.BoxCast(castOrigin + offset, castSize, 0f, Vector2.right, castDistance, collisionLayer);
+            RaycastHit2D hitLeft = Physics2D.BoxCast(castOrigin - offset, castSize, 0f, Vector2.left, castDistance, collisionLayer);
+            SetCollisionData(hitRight, CollisionDirection.Right);
+            SetCollisionData(hitLeft, CollisionDirection.Left);
+            */ 
+            
+            SetCollisionData(hitUp, CollisionDirection.Top);
+            SetCollisionData(hitDown, CollisionDirection.Bottom);
         }
 
-        private void OnCollisionExit2D(Collision2D other)
+        private void SetCollisionData(RaycastHit2D hit, CollisionDirection direction)
         {
-            if(other.gameObject.GetComponent<IgnoreCollision>()) return;
-            if(--numberOfCollidersTouching != 0) return;
-            var collisionData = new CollisionData
+            int index = (int)direction;
+            if (hit)
             {
-                IsSolid = true
-            };
-            movementComponent.CollisionExit(hitDirection, collisionData);
-        }
-        private void OnTriggerEnter2D(Collider2D other)
-        {
-            if(other.gameObject.GetComponent<IgnoreCollision>()) return;
-            if(numberOfCollidersTouching++ != 0) return;
-            var collisionData = new CollisionData
+                var wasHitBefore = collisions[index].IsHit;
+                collisions[index].IsHit = true;
+                collisions[index].Direction = direction;
+                if (!wasHitBefore)
+                {
+                    CollisionEnter.Invoke(collisions[index]);
+                }
+            }
+            else
             {
-                IsSolid = false
-            };
-            movementComponent.CollisionEnter(hitDirection, collisionData);
-        }
-
-        private void OnTriggerExit2D(Collider2D other)
-        {
-            if(other.gameObject.GetComponent<IgnoreCollision>()) return;
-            if(--numberOfCollidersTouching != 0) return;
-            var collisionData = new CollisionData
-            {
-                IsSolid = false
-            };
-            movementComponent.CollisionExit(hitDirection, collisionData);
+                var wasHitBefore = collisions[index].IsHit;
+                collisions[index].IsHit = false;
+                if (wasHitBefore)
+                {
+                    CollisionExit.Invoke(collisions[index]);
+                }
+            }
         }
     }
 }

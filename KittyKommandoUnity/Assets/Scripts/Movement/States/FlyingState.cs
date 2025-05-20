@@ -18,11 +18,10 @@ namespace Movement.States
 
             return null;
         }
-        public override float Update(MovementComponent movementComponent, float deltaTime)
+        public override void Update(MovementComponent movementComponent, float deltaTime)
         {
             movementComponent.Move(MoveDirection);
             ExternalForce *= 0.5f;
-            return 0;
         }
         public override void OnStateEnter(MovementComponent movementComponent)
         {
@@ -32,12 +31,12 @@ namespace Movement.States
         {
         }
 
-        public override MovementState OnCollisionEnter(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
             return null;
         }
 
-        public override MovementState OnCollisionExit(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionExit(CollisionData collisionData)
         {
             return null;
         }

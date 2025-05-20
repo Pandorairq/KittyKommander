@@ -44,16 +44,16 @@ namespace Movement.States
         {
         }
 
-        public override MovementState OnCollisionEnter(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
-            if (collisionDirection == CollisionHit.Bottom) return new StandingState();
+            if (collisionData.Direction == CollisionDirection.Bottom) return new StandingState();
             if (!collisionData.IsSolid) return null;
             
             MoveDirection.x = 0;
             return null;
         }
 
-        public override MovementState OnCollisionExit(CollisionHit collisionDirection, CollisionData collisionData)
+        public override MovementState OnCollisionExit(CollisionData collisionData)
         {
             return null;
         }
