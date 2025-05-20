@@ -1,20 +1,18 @@
-﻿using System;
-using Reset;
+﻿using Reset;
 using UnityEngine;
 
 namespace Movement.States
 {
-    public class WalkingStairState : GroundedState
+    
+    public class WalkingState : GroundedState
     {
-        private Vector3 stairDirection;
-
-        public WalkingStairState(Vector3 direction)
+        public WalkingState(Vector3 direction)
         {
-            stairDirection = direction;
+            MoveDirection = direction;
         }
         public override MovementState HandleInput(MovementComponent movementComponent, InputData inputData)
         {
-            if (inputData.JumpInput)
+            if (inputData.Jump)
             {
                 switch (inputData.HorizontalInput)
                 {
@@ -30,50 +28,39 @@ namespace Movement.States
             {
                 case >0:
                     MoveDirection += Vector3.right;
+                    if (inputData.Running) return new RunningState(MoveDirection);
                     break;
                 case <0:
                     MoveDirection += Vector3.left;
+                    if (inputData.Running) return new RunningState(MoveDirection);
                     break;
                 case 0:
-                    return null;
+                    return new StandingState();
             }
-
             return null;
-        }
-
-        public override void Update(MovementComponent movementComponent, float deltaTime)
-        {
-            viewDirection = MoveDirection.x;
-            movementComponent.Move(stairDirection * MoveDirection.x + ExternalForce);
-            MoveDirection = Vector3.zero;
-            ExternalForce = Vector3.zero;
         }
 
         public override void OnStateEnter(MovementComponent movementComponent)
         {
         }
 
-        public override void OnStateExit(MovementComponent movementComponent)
-        {
-            Vector3 pos = movementComponent.transform.position;
-            movementComponent.transform.position = new Vector3(pos.x, MathF.Round(pos.y), pos.z);
-        }
+
+        public override void OnStateExit(MovementComponent movementComponent) { }
 
         public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
-            
             return null;
-            
         }
 
         public override MovementState OnCollisionExit(CollisionData collisionData)
-        {
+        { 
+            if(collisionData.Direction == CollisionDirection.Bottom) return new FallingState(Vector3.zero);
             return null;
         }
 
         public override int GetStateID()
         {
-            return 2;
+            return 1;
         }
     }
 }

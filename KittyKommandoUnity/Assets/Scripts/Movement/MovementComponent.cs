@@ -101,17 +101,6 @@ namespace Movement
             InitializeState(new StandingState());
         }
 
-        public void SwitchToState(MovementState s)
-        {
-            if(s is not SwingingState or WalkingStairState) return;
-            SwitchToNewState(s);
-        }
-        
-        public void SwitchToDefaultState()
-        {
-            SwitchToNewState(new StandingState());
-        }
-
         private void OnEnable()
         {
             collisionDetection.CollisionEnter.AddListener(CollisionEnter);

@@ -40,12 +40,12 @@ namespace Movement.InputControllers
 
         private void OnJumpPressed(InputAction.CallbackContext context)
         {
-            input.JumpInput = true;
+            input.Jump = true;
         }
 
         private void OnJumpReleased(InputAction.CallbackContext context)
         {
-            input.JumpInput = false;
+            input.Jump = false;
         }
     }
 }

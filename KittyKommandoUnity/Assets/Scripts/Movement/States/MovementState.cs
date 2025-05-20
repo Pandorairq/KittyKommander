@@ -6,14 +6,14 @@ namespace Movement.States
 {
     public struct InputData
     {
-        public float VerticalInput;
         public float HorizontalInput;
-        public bool JumpInput;
+        public bool Running;
+        public bool Jump;
     }
     [Serializable]
     public abstract class MovementState
     {
-        protected float viewDirection;
+        protected float ViewDirection;
         protected Vector3 MoveDirection;
         protected Vector3 ExternalForce;
         public abstract MovementState HandleInput(MovementComponent movementComponent, InputData inputData);
@@ -34,7 +34,7 @@ namespace Movement.States
         
         public override void Update(MovementComponent movementComponent, float deltaTime)
         {
-            viewDirection = MoveDirection.x;
+            ViewDirection = MoveDirection.x;
             movementComponent.Move(MoveDirection + ExternalForce);
             MoveDirection = Vector3.zero;
             ExternalForce = Vector3.zero;
@@ -48,7 +48,7 @@ namespace Movement.States
 
         public override void Update(MovementComponent movementComponent, float deltaTime)
         {
-            viewDirection = MoveDirection.x;
+            ViewDirection = MoveDirection.x;
             MoveDirection += Vector3.down * (Gravity * deltaTime);
             movementComponent.Move(MoveDirection + ExternalForce);
             if(InAirMovementEnabled) MoveDirection.x = 0;

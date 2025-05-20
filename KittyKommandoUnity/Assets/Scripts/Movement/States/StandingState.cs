@@ -9,24 +9,15 @@ namespace Movement.States
     {
         public override MovementState HandleInput(MovementComponent movementComponent, InputData inputData)
         {
-            if (inputData.VerticalInput != 0)
-            {
-                switch (inputData.VerticalInput)
-                {
-                    case >0:
-                        return new FlyingState();
-                    case <0:
-                        return new FlyingState();
-                }
-            }
-            if (inputData.JumpInput)
+            
+            if (inputData.Jump)
             {
                 switch (inputData.HorizontalInput)
                 {
                     case >0:
-                        return new JumpingState(MoveDirection + Vector3.right);
+                        return new JumpingState(Vector3.right);
                     case <0:
-                        return new JumpingState(MoveDirection + Vector3.left);
+                        return new JumpingState(Vector3.left);
                     case 0:
                         return new JumpingState(MoveDirection);
                 }
@@ -35,9 +26,9 @@ namespace Movement.States
             switch (inputData.HorizontalInput)
             {
                 case >0:
-                    return new RunningState(MoveDirection + Vector3.right);
+                    return inputData.Running ? new RunningState(Vector3.right) : new WalkingState(Vector3.right);
                 case <0:
-                    return new RunningState(MoveDirection + Vector3.left);
+                    return inputData.Running ? new RunningState(Vector3.left) : new WalkingState(Vector3.left);
                 case 0:
                     break;
             }
