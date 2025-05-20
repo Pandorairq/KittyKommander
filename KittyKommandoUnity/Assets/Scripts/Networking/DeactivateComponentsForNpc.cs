@@ -6,15 +6,18 @@ using UnityEngine;
 
 namespace Networking
 {
-     public class Test : NetworkBehaviour
+     public class DeactivateComponentsForNpc : NetworkBehaviour
      {
-          [SerializeField] private InputController controller;
+          [SerializeField] private MonoBehaviour[] components;
           public override void OnStartClient()
           {
                base.OnStartClient();
                if (!IsOwner)
                {
-                    controller.enabled = false;
+                    foreach (var component in components)
+                    {
+                         component.enabled = false;
+                    }
                }
           }
      }
