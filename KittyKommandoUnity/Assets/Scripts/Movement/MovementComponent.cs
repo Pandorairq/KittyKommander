@@ -20,12 +20,15 @@ namespace Movement
 
         [SerializeField] private InputController inputController;
         [SerializeField] private CollisionDetection collisionDetection;
-        [SerializeField] private Rigidbody2D r; 
-        
+        [SerializeField] private Rigidbody2D r;
+        private CharacterAnimator characterAnimator;
+        public GameObject characterPrefab;
+
         void Start()
         {
             ResetComponent();
             r = GetComponent<Rigidbody2D>();
+            characterAnimator = GetComponent<CharacterAnimator>();
         }
 
         public void EvaluateInput()
@@ -40,6 +43,10 @@ namespace Movement
             EvaluateInput();
             state.Update(this, Time.fixedDeltaTime);
             collisionDetection.CheckCollisions();
+            if (characterAnimator != null)
+            {
+                characterAnimator.UpdateAnimationState(state);
+            }
         }
         
         
