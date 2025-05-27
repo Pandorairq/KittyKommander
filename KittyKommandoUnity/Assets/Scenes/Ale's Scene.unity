@@ -521,11 +521,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1642193190}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &178452180 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 1720303269975132434, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-  m_PrefabInstance: {fileID: 540593203}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -674,7 +669,7 @@ PrefabInstance:
     - target: {fileID: -8343059322252066452, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: _addedNetworkObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 540593205}
     - target: {fileID: -8343059322252066452, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: _networkObjectCache
       value: 
@@ -682,14 +677,22 @@ PrefabInstance:
     - target: {fileID: -3309588063712657278, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: _addedNetworkObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 540593205}
     - target: {fileID: 64587111737028453, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: _addedNetworkObject
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 540593205}
     - target: {fileID: 1720303269975132434, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460730900005408028, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4460730900005408028, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: WasActiveDuringEdit
@@ -698,6 +701,18 @@ PrefabInstance:
     - target: {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: <SceneId>k__BackingField
       value: 1308621041
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[0]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[1]'
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+      propertyPath: 'NetworkBehaviours.Array.data[2]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 6854517802832327441, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
       propertyPath: m_Sprite
@@ -751,75 +766,27 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents:
-    - {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-    - {fileID: -8343059322252066452, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-    - {fileID: 64587111737028453, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-    - {fileID: -3309588063712657278, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+    m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 1720303269975132434, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 540593216}
-    - targetCorrespondingSourceObject: {fileID: 1720303269975132434, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 540593217}
-    - targetCorrespondingSourceObject: {fileID: 1720303269975132434, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 540593218}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
 --- !u!4 &540593204 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7775605049209093998, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
   m_PrefabInstance: {fileID: 540593203}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &540593216
+--- !u!114 &540593205 stripped
 MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
+  m_CorrespondingSourceObject: {fileID: 6143172911703789974, guid: f770167d220bd4b438eedb868a434bb3, type: 3}
+  m_PrefabInstance: {fileID: 540593203}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178452180}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b6a7f25a43e65c46b75871f177cacbe, type: 3}
+  m_Script: {fileID: 11500000, guid: 26b716c41e9b56b4baafaf13a523ba2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &540593217
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178452180}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93bf9658dcc7c9746b1d414b5df57fc1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!95 &540593218
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 178452180}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 45c2bd988c69b43499b946cdda2e83ce, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &619394800
 GameObject:
   m_ObjectHideFlags: 0
