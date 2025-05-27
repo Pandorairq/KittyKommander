@@ -64,7 +64,8 @@ namespace Movement
         }
         public void Move(Vector3 direction)
         {
-            r.linearVelocity = new Vector3(direction.x * movementSpeed, direction.y * inAirSpeed, direction.z * movementSpeed);
+            //r.linearVelocity = new Vector3(direction.x * movementSpeed, direction.y * inAirSpeed, direction.z * movementSpeed);
+            r.MovePosition(r.position + new Vector2(direction.x * movementSpeed, direction.y * inAirSpeed));
             //   transform.Translate(new Vector3(direction.x * movementSpeed, direction.y, direction.z * movementSpeed) * deltaTime,Space.World);
         }
     

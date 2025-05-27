@@ -43,10 +43,10 @@ namespace Movement
         {
             Vector2 castOrigin = (Vector2)transform.position + collider.offset;
             
-            Vector2 offset = new Vector2(0, size.y / 4);
+            Vector2 offset = new Vector2(0, size.y / 8);
             Vector2 castSize = new Vector2(size.x - shrinkMargin, size.y / 2); 
-            RaycastHit2D hitUp = Physics2D.BoxCast(castOrigin + offset, castSize, 0f, Vector2.up, castDistance, collisionLayer);
-            RaycastHit2D hitDown = Physics2D.BoxCast(castOrigin - offset, castSize, 0f, Vector2.down, castDistance, collisionLayer);
+            RaycastHit2D hitUp = Physics2D.BoxCast(castOrigin + 3 * offset, castSize, 0f, Vector2.up, castDistance, collisionLayer);
+            RaycastHit2D hitDown = Physics2D.BoxCast(castOrigin - 3 * offset, castSize, 0f, Vector2.down, castDistance, collisionLayer);
             
             /*
             offset = new Vector2(size.x / 4, 0);
@@ -59,6 +59,17 @@ namespace Movement
             
             SetCollisionData(hitUp, CollisionDirection.Top);
             SetCollisionData(hitDown, CollisionDirection.Bottom);
+        }
+
+        private void OnDrawGizmos()
+        {
+            Vector2 castOrigin = (Vector2)transform.position + collider.offset;
+            
+            Vector2 offset = new Vector2(0, size.y / 8);
+            Vector2 castSize = new Vector2(size.x - shrinkMargin, size.y / 2);
+            Gizmos.DrawCube(castOrigin + 3 * offset, castSize);
+            Gizmos.DrawCube(castOrigin - 3 * offset, castSize);
+
         }
 
         private void SetCollisionData(RaycastHit2D hit, CollisionDirection direction)
