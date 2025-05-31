@@ -1,10 +1,8 @@
 using System;
-using Movement.InputControllers;
-using Movement.States;
 using UnityEditor;
 using UnityEngine;
 
-namespace Reset.InputControllers
+namespace Input.InputControllers
 {
     public class HorizontalEnemyController : InputController
     {

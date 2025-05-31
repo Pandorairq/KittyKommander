@@ -58,6 +58,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48e381563bfe2fe4e8405028a4c4cd02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  onJumpButton:
+    m_PersistentCalls:
+      m_Calls: []
+  onActionButton:
+    m_PersistentCalls:
+      m_Calls: []
+  onRunningButton:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &8750601349860707807
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -70,21 +79,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b2889e7a541cb434e80a353fe58a6c0e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  OnStateChanged:
+  onStateChanged:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 934920674690317127}
-        m_TargetAssemblyTypeName: CharacterAnimator, Assembly-CSharp
-        m_MethodName: UpdateAnimationState
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
   movementSpeed: 0.2
   jumpHeight: 0.4
   inAirSpeed: 1
@@ -104,10 +101,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2601a9972c2349a686656049acac5dcd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CollisionEnter:
+  collisionEnter:
     m_PersistentCalls:
       m_Calls: []
-  CollisionExit:
+  collisionExit:
     m_PersistentCalls:
       m_Calls: []
   collisionLayer:
@@ -116,7 +113,7 @@ MonoBehaviour:
   castDistance: 0.1
   size: {x: 0.8, y: 1.6}
   shrinkMargin: 0
-  collider: {fileID: 7705504360145188052}
+  collider: {fileID: 4460730900005408028}
 --- !u!212 &6854517802832327441
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -441,7 +438,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.9, y: 2}
+  m_Size: {x: 1, y: 2}
   m_EdgeRadius: 0
 --- !u!114 &7493862669209713168
 MonoBehaviour:

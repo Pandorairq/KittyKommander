@@ -1,5 +1,5 @@
 using System;
-using Movement.InputControllers;
+using Input.InputControllers;
 using UnityEngine;
 
 public class SpriteFlipper : MonoBehaviour

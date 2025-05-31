@@ -1,7 +1,6 @@
 using System;
-using Movement.InputControllers;
+using Input.InputControllers;
 using Movement.States;
-using Reset.InputControllers;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.Serialization;
@@ -13,7 +12,7 @@ namespace Movement
     [RequireComponent(typeof(CollisionDetection))]
     public class MovementComponent : MonoBehaviour
     {
-        public UnityEvent<MovementState> OnStateChanged = new ();
+        public UnityEvent<MovementState> onStateChanged = new ();
         [SerializeField] private float movementSpeed;
         [SerializeField] private float jumpHeight;
         [SerializeField] private float inAirSpeed;
@@ -39,9 +38,9 @@ namespace Movement
 
         void FixedUpdate()
         {
+            collisionDetection.CheckCollisions();
             EvaluateInput();
             state.Update(this, Time.fixedDeltaTime);
-            collisionDetection.CheckCollisions();
         }
         
         
@@ -97,7 +96,7 @@ namespace Movement
         {
             state = s;
             state.OnStateEnter(this);
-            OnStateChanged.Invoke(state);
+            onStateChanged.Invoke(state);
         }
 
         public void ResetComponent()
@@ -107,14 +106,14 @@ namespace Movement
 
         private void OnEnable()
         {
-            collisionDetection.CollisionEnter.AddListener(CollisionEnter);
-            collisionDetection.CollisionExit.AddListener(CollisionExit);
+            collisionDetection.collisionEnter.AddListener(CollisionEnter);
+            collisionDetection.collisionExit.AddListener(CollisionExit);
         }
 
         private void OnDisable()
         {
-            collisionDetection.CollisionEnter.AddListener(CollisionEnter);
-            collisionDetection.CollisionExit.AddListener(CollisionExit);
+            collisionDetection.collisionEnter.AddListener(CollisionEnter);
+            collisionDetection.collisionExit.AddListener(CollisionExit);
         }
     }
 }

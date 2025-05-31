@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 namespace Movement
 { 
@@ -23,8 +24,8 @@ namespace Movement
     
     public class CollisionDetection : MonoBehaviour
     {
-        public UnityEvent<CollisionData> CollisionEnter = new ();
-        public UnityEvent<CollisionData> CollisionExit = new ();
+        public UnityEvent<CollisionData> collisionEnter = new ();
+        public UnityEvent<CollisionData> collisionExit = new ();
         
         [SerializeField] private LayerMask collisionLayer;
         [SerializeField] private float castDistance = 0.1f;
@@ -82,7 +83,7 @@ namespace Movement
                 collisions[index].Direction = direction;
                 if (!wasHitBefore)
                 {
-                    CollisionEnter.Invoke(collisions[index]);
+                    collisionEnter.Invoke(collisions[index]);
                 }
             }
             else
@@ -91,7 +92,7 @@ namespace Movement
                 collisions[index].IsHit = false;
                 if (wasHitBefore)
                 {
-                    CollisionExit.Invoke(collisions[index]);
+                    collisionExit.Invoke(collisions[index]);
                 }
             }
         }

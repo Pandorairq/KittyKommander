@@ -1,15 +1,10 @@
 using System;
-using Reset;
+using Input.InputControllers;
+
 using UnityEngine;
 
 namespace Movement.States
 {
-    public struct InputData
-    {
-        public float HorizontalInput;
-        public bool Running;
-        public bool Jump;
-    }
     [Serializable]
     public abstract class MovementState
     {
