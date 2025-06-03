@@ -46,8 +46,7 @@ namespace Movement.States
         }
         public override MovementState OnCollisionEnter(CollisionData collisionData)
         {
-            //return collisionData.Direction == CollisionDirection.Top && collisionData.IsSolid ? new FallingState(Vector3.zero) : null;
-            return collisionData.Direction == CollisionDirection.Top  ? new FallingState(Vector3.zero) : null;
+            return collisionData is { Direction: CollisionDirection.Top, IsSolid: true } ? new FallingState(Vector3.zero) : null;
         }
 
         public override MovementState OnCollisionExit(CollisionData collisionData)

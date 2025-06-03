@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Action.Interactables
+namespace BehaviorComponents
 {
     [RequireComponent(typeof(Collider2D))]
     public class DeactivateCollider : MonoBehaviour

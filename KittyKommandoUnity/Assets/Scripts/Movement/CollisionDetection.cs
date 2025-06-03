@@ -81,6 +81,7 @@ namespace Movement
                 var wasHitBefore = collisions[index].IsHit;
                 collisions[index].IsHit = true;
                 collisions[index].Direction = direction;
+                collisions[index].IsSolid = !hit.collider.isTrigger;
                 if (!wasHitBefore)
                 {
                     collisionEnter.Invoke(collisions[index]);
@@ -90,6 +91,7 @@ namespace Movement
             {
                 var wasHitBefore = collisions[index].IsHit;
                 collisions[index].IsHit = false;
+                collisions[index].IsSolid = false;
                 if (wasHitBefore)
                 {
                     collisionExit.Invoke(collisions[index]);
