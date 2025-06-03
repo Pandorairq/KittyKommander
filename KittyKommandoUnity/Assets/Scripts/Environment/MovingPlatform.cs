@@ -3,47 +3,67 @@ using System.Collections.Generic;
 using UnityEngine.InputSystem;
 using Movement.States;
 using Movement;
+using FishNet.Object;
 
 namespace Movement.States
 {
-    public class MovingPlatform : MonoBehaviour
+    public class MovingPlatform : NetworkBehaviour
     {
-        public float speed;
-        public Transform[] waypoints;
-        [SerializeField] private MovementComponent movementComponent;
+        [Header("Platform Settings")]
+        [SerializeField] private float speed;
+        [SerializeField] protected Transform[] waypoints;
+
         private bool isQuitting = false;
 
-        private int targetPointIndex = 0;
+        protected int targetPointIndex = 0;
+        protected const int startingPointIndex = 0;
+        private const float thresholdWaypointReached = 0.01f;
 
-        void Awake()
+        protected virtual void Awake()
         {
             if (waypoints == null || waypoints.Length == 0)
             {
-                Debug.LogError("MovingPlatform: No waypoints assigned!");
-                enabled = false;
+                Debug.LogError("MovingPlatform: No waypoints assigned at runtime.");
                 return;
             }
 
-            if (movementComponent == null)
-            {
-                Debug.LogWarning("MovingPlatform: movementComponent is not assigned.");
-                enabled = false;
-                return;
-            }
             transform.position = waypoints[targetPointIndex].position;
         }
 
-        void Update()
+        protected virtual void Update()
         {
-            if (Mathf.Approximately(Vector2.Distance(transform.position, waypoints[targetPointIndex].position), 0f))
+            if (!IsServerInitialized) return;
+
+            MoveToNextWaypoint();
+        }
+
+        protected virtual void MoveToNextWaypoint()
+        {
+            if (HasReachedTarget())
             {
                 AdvanceToNextPoint();
             }
 
-            transform.position = Vector2.MoveTowards(transform.position, waypoints[targetPointIndex].position, speed * Time.deltaTime);
+            MoveTowardsWaypointIndex(targetPointIndex);
         }
 
-        private void AdvanceToNextPoint()
+        protected void MoveTowardsWaypointIndex(int index)
+        {
+            if (index < 0 || index >= waypoints.Length || waypoints[index] == null)
+            {
+                Debug.LogWarning("Invalid index on Moving Platform");
+                return;
+            }
+
+            transform.position = Vector2.MoveTowards(transform.position, waypoints[index].position, speed * Time.deltaTime);
+        }
+
+        protected bool HasReachedTarget()
+        {
+            return Vector2.Distance(transform.position, waypoints[targetPointIndex].position) <= thresholdWaypointReached;
+        }
+
+        protected virtual void AdvanceToNextPoint()
         {
             targetPointIndex = (targetPointIndex + 1) % waypoints.Length;
         }
@@ -56,50 +76,48 @@ namespace Movement.States
             }
         }
 
-        private void OnCollisionEnter2D(Collision2D other)
+        protected virtual void OnCollisionEnter2D(Collision2D collision)
         {
-            if (!IsPlayer(other.gameObject)) return;
-            SetPlayerParent(other.transform, transform);
+            if (!IsPlayer(collision.gameObject)) return;
+
+            SetPlayerParent(collision.transform, transform);
         }
 
-        private void OnCollisionExit2D(Collision2D other)
+        protected virtual void OnCollisionExit2D(Collision2D collision)
         {
-            if (isQuitting) return;
-            if (!IsPlayer(other.gameObject)) return;
-            SetPlayerParent(other.transform, null);
+            if (isQuitting || !IsPlayer(collision.gameObject)) return;
+
+            SetPlayerParent(collision.transform, null);
         }
 
-        private void OnCollisionStay2D(Collision2D other)
+        private void OnCollisionStay2D(Collision2D collision)
         {
-            if (!IsPlayer(other.gameObject)) return;
+            if (!IsPlayer(collision.gameObject)) return;
+
+            MovementComponent movementComponent = collision.gameObject.GetComponent<MovementComponent>();
+            if (movementComponent == null) return;
+
             MovementState currentState = movementComponent.GetState();
 
             if (currentState is StandingState)
             {
-                if (other.transform.parent == null)
+                if (collision.transform.parent == null)
                 {
-                    SetPlayerParent(other.transform, transform);
+                    SetPlayerParent(collision.transform, transform);
                 }
             }
             else
             {
-                SetPlayerParent(other.transform, null);
+                SetPlayerParent(collision.transform, null);
             }
         }
 
-        private bool IsPlayer(GameObject obj)
+        protected bool IsPlayer(GameObject obj)
         {
-            return obj.CompareTag("Player");
+            return obj.layer == LayerMask.NameToLayer("Player");
         }
 
-        private void OnApplicationQuit()
-        {
-            isQuitting = true;
-        }
-
-        private void OnDestroy()
-        {
-            isQuitting = true;
-        }
+        private void OnApplicationQuit() => isQuitting = true;
+        private void OnDestroy() => isQuitting = true;
     }
 }
