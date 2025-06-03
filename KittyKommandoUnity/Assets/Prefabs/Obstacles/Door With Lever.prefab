@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8269463255134497367}
   - component: {fileID: 7347464913853316640}
   - component: {fileID: 8628579912449633860}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Door With Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -160,7 +160,7 @@ GameObject:
   - component: {fileID: 6958167411471100464}
   - component: {fileID: 8127183831458688878}
   - component: {fileID: 8148249840837721271}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Lever
   m_TagString: Untagged
   m_Icon: {fileID: 0}

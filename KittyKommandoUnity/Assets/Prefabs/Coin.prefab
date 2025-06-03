@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 9115658163877955936}
   - component: {fileID: 5222040856677529051}
   - component: {fileID: 3185174367417618713}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Coin
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -191,6 +191,9 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+  collectorLayer:
+    serializedVersion: 2
+    m_Bits: 0
 --- !u!114 &3185174367417618713
 MonoBehaviour:
   m_ObjectHideFlags: 0
