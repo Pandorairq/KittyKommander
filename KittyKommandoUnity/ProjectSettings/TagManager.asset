@@ -11,13 +11,13 @@ TagManager:
   - Player
   - Water
   - UI
-  - Enemie
+  - Enemy
   - LevelSurroundings
   - LevelObstacles
   - Collectibles
   - Interactables
-  - Projectiles
-  - 
+  - Player Projectiles
+  - Enemy Projectiles
   - 
   - 
   - 
