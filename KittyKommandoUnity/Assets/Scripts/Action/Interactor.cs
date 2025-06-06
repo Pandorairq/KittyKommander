@@ -1,7 +1,7 @@
 using System;
-using Input.InputControllers;
+using System.Collections.Generic;
+using NUnit.Framework;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Action
 {
@@ -10,45 +10,48 @@ namespace Action
         [SerializeField] private float interactionRadius;
         [SerializeField] private LayerMask interactionLayer;
         [SerializeField] private Interactable currentInteractable;
-        
-        //This function has to be passed to the input Controllers Action Event via the inspector
-        public void OnActionButton(bool isPressed)
+        private List<Interactable> interactables = new ();
+
+
+        private void Update()
         {
-            if (isPressed)
+            Interactable nearest = null;
+            float shortestDistance = Mathf.Infinity;
+
+            foreach (Interactable interactable in interactables)
             {
-                StartInteractingWithNearestObject();
+                if (!interactable) continue;
+                float distance = Vector3.Distance(transform.position, interactable.transform.position);
+                if (distance < shortestDistance)
+                {
+                    shortestDistance = distance;
+                    nearest = interactable;
+                }
             }
-            else
-            {
-                StopInteractingWithObject();
-            }
+
+            currentInteractable?.RemoveHighlight();
+            currentInteractable = nearest;
+            currentInteractable?.Highlight();
+            
+        }
+
+        //This function has to be passed to the input Controllers Action Event via the inspector
+        public void OnActionStarted()
+        { 
+            StartInteractingWithNearestObject();
+        }
+
+        //This function has to be passed to the input Controllers Action Event via the inspector
+        public void OnActionStopped()
+        {
+            StopInteractingWithObject();
         }
 
         void StartInteractingWithNearestObject()
         {
-            Collider2D[] colliders = Physics2D.OverlapCircleAll(transform.position, interactionRadius, interactionLayer);
-
-            Interactable nearest = null;
-            float shortestDistance = Mathf.Infinity;
-
-            foreach (Collider2D col in colliders)
+            if (currentInteractable)
             {
-                Interactable interactable = col.GetComponent<Interactable>();
-                if (interactable != null)
-                {
-                    float distance = Vector3.Distance(transform.position, col.transform.position);
-                    if (distance < shortestDistance)
-                    {
-                        shortestDistance = distance;
-                        nearest = interactable;
-                    }
-                }
-            }
-            
-            if (nearest != null)
-            {
-                currentInteractable = nearest;
-                nearest.onInteraction.Invoke(this);
+                currentInteractable.onInteraction.Invoke(this);
             }
         }
 
@@ -56,13 +59,27 @@ namespace Action
         {
             if(!currentInteractable) return;
             currentInteractable.onRelease.Invoke();
-            currentInteractable = null;
         }
 
-        private void OnDrawGizmos()
+        public void OnTriggerEnter2D(Collider2D other)
         {
-            Gizmos.color = new Color(0, 1, 1, 0.5f);
-            Gizmos.DrawSphere(transform.position, interactionRadius);
+            var interactable = other.GetComponent<Interactable>();
+            print("test");
+            if (interactable)
+            {
+                print("Hi");
+                interactables.Add(interactable);
+            }
+        }
+
+        public void OnTriggerExit2D(Collider2D other)
+        {
+            var interactable = other.GetComponent<Interactable>();
+            if (interactable)
+            {
+                interactables.Remove(interactable);
+            }
+            
         }
     }
 }

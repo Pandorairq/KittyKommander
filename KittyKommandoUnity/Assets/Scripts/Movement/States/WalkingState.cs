@@ -1,4 +1,5 @@
 ﻿using Input.InputControllers;
+using Input.InputControllers.Movement;
 using UnityEngine;
 
 namespace Movement.States
@@ -10,11 +11,11 @@ namespace Movement.States
         {
             MoveDirection = direction;
         }
-        public override MovementState HandleInput(MovementComponent movementComponent, InputData inputData)
+        public override MovementState HandleInput(MovementComponent movementComponent, MovementData movementData)
         {
-            if (inputData.Jump)
+            if (movementData.Jump)
             {
-                switch (inputData.HorizontalInput)
+                switch (movementData.HorizontalInput)
                 {
                     case >0:
                         return new JumpingState(MoveDirection + Vector3.right, ExternalForce);
@@ -24,15 +25,15 @@ namespace Movement.States
                         return new JumpingState(MoveDirection, ExternalForce);
                 }
             }
-            switch (inputData.HorizontalInput)
+            switch (movementData.HorizontalInput)
             {
                 case >0:
                     MoveDirection += Vector3.right;
-                    if (inputData.Running) return new RunningState(MoveDirection);
+                    if (movementData.Running) return new RunningState(MoveDirection);
                     break;
                 case <0:
                     MoveDirection += Vector3.left;
-                    if (inputData.Running) return new RunningState(MoveDirection);
+                    if (movementData.Running) return new RunningState(MoveDirection);
                     break;
                 case 0:
                     return new StandingState();

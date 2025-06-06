@@ -1,5 +1,6 @@
 using System;
 using Input.InputControllers;
+using Input.InputControllers.Movement;
 using Movement.States;
 using UnityEngine;
 using UnityEngine.Events;
@@ -7,8 +8,6 @@ using UnityEngine.Serialization;
 
 namespace Movement
 {
-    
-    [RequireComponent(typeof(InputController))]
     [RequireComponent(typeof(CollisionDetection))]
     public class MovementComponent : MonoBehaviour
     {
@@ -19,7 +18,7 @@ namespace Movement
         [SerializeField] private float gravity;
         private MovementState state;
 
-        [SerializeField] private InputController inputController;
+        [SerializeField] private MovementController movementController;
         [SerializeField] private CollisionDetection collisionDetection;
         [SerializeField] private Rigidbody2D r;
 
@@ -31,7 +30,7 @@ namespace Movement
 
         public void EvaluateInput()
         {
-            var inputData = inputController.GetInput();
+            var inputData = movementController.GetInput();
             var s = state.HandleInput(this, inputData);
             SwitchToNewState(s);
         }

@@ -1,6 +1,6 @@
 ﻿using System;
 using Input.InputControllers;
-
+using Input.InputControllers.Movement;
 using UnityEngine;
 
 namespace Movement.States
@@ -8,12 +8,12 @@ namespace Movement.States
     
     public class StandingState : GroundedState
     {
-        public override MovementState HandleInput(MovementComponent movementComponent, InputData inputData)
+        public override MovementState HandleInput(MovementComponent movementComponent, MovementData movementData)
         {
             
-            if (inputData.Jump)
+            if (movementData.Jump)
             {
-                switch (inputData.HorizontalInput)
+                switch (movementData.HorizontalInput)
                 {
                     case >0:
                         return new JumpingState(Vector3.right);
@@ -24,12 +24,12 @@ namespace Movement.States
                 }
             }
             
-            switch (inputData.HorizontalInput)
+            switch (movementData.HorizontalInput)
             {
                 case >0:
-                    return inputData.Running ? new RunningState(Vector3.right) : new WalkingState(Vector3.right);
+                    return movementData.Running ? new RunningState(Vector3.right) : new WalkingState(Vector3.right);
                 case <0:
-                    return inputData.Running ? new RunningState(Vector3.left) : new WalkingState(Vector3.left);
+                    return movementData.Running ? new RunningState(Vector3.left) : new WalkingState(Vector3.left);
                 case 0:
                     break;
             }

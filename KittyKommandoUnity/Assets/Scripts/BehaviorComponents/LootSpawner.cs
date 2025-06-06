@@ -4,6 +4,7 @@ namespace BehaviorComponents
 {
     public class LootSpawner : MonoBehaviour
     {
+        [SerializeField] private float lootSpeed = 5f;
         [SerializeField] private GameObject[] loot;
         [SerializeField] private bool destroyAfterSpawning;
 
@@ -11,7 +12,12 @@ namespace BehaviorComponents
         {
             foreach (GameObject l in loot)
             {
-                Instantiate(l, transform.position, Quaternion.identity);
+                var lootObject = Instantiate(l, transform.position, Quaternion.identity);
+                var lootRigidBody = lootObject.GetComponent<Rigidbody2D>();
+                if (lootRigidBody)
+                {
+                    lootRigidBody.linearVelocity = Vector2.up * lootSpeed;
+                }
             }
         }
     }

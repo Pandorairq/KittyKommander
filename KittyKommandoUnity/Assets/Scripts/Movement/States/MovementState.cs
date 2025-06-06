@@ -1,6 +1,6 @@
 using System;
 using Input.InputControllers;
-
+using Input.InputControllers.Movement;
 using UnityEngine;
 
 namespace Movement.States
@@ -11,7 +11,7 @@ namespace Movement.States
         protected float ViewDirection;
         protected Vector3 MoveDirection;
         protected Vector3 ExternalForce;
-        public abstract MovementState HandleInput(MovementComponent movementComponent, InputData inputData);
+        public abstract MovementState HandleInput(MovementComponent movementComponent, MovementData movementData);
         public abstract void Update(MovementComponent movementComponent, float deltaTime);
         public abstract void OnStateEnter(MovementComponent movementComponent);
         public abstract void OnStateExit(MovementComponent movementComponent);
@@ -38,24 +38,18 @@ namespace Movement.States
 
     public abstract class InAirState : MovementState
     {
-        protected static bool InAirMovementEnabled = true;
-        protected float Gravity;
+        protected float gravity;
 
         public override void Update(MovementComponent movementComponent, float deltaTime)
         {
             ViewDirection = MoveDirection.x;
-            MoveDirection += Vector3.down * (Gravity * deltaTime);
+            MoveDirection += Vector3.down * (gravity * deltaTime);
             movementComponent.Move(MoveDirection + ExternalForce);
-            if(InAirMovementEnabled) MoveDirection.x = 0;
+            MoveDirection.x = 0;
         }
         public Vector3 GetDirection()
         {
             return MoveDirection;
-        }
-
-        public static void SetInAirMovement(bool enabled)
-        {
-            InAirMovementEnabled = enabled;
         }
     }
 

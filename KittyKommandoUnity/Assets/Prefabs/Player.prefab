@@ -62,9 +62,6 @@ MonoBehaviour:
   onJumpButton:
     m_PersistentCalls:
       m_Calls: []
-  onActionButton:
-    m_PersistentCalls:
-      m_Calls: []
   onRunningButton:
     m_PersistentCalls:
       m_Calls: []
@@ -87,7 +84,7 @@ MonoBehaviour:
   jumpHeight: 0.4
   inAirSpeed: 1
   gravity: 1
-  inputController: {fileID: 943309745963188382}
+  movementController: {fileID: 943309745963188382}
   collisionDetection: {fileID: 1358328623259888218}
   r: {fileID: 2659665899158344374}
 --- !u!114 &1358328623259888218
@@ -104,10 +101,34 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   collisionEnter:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8750601349860707807}
+        m_TargetAssemblyTypeName: Movement.MovementComponent, Assembly-CSharp
+        m_MethodName: CollisionEnter
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   collisionExit:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 8750601349860707807}
+        m_TargetAssemblyTypeName: Movement.MovementComponent, Assembly-CSharp
+        m_MethodName: CollisionExit
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   collisionLayer:
     serializedVersion: 2
     m_Bits: 128

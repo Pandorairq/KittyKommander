@@ -1,10 +1,11 @@
 using System;
 using Input.InputControllers;
+using Input.InputControllers.Movement;
 using UnityEngine;
 
 public class SpriteFlipper : MonoBehaviour
 {
-    [SerializeField] private InputController controller;
+    [SerializeField] private MovementController controller;
     
     private void Update()
     {
