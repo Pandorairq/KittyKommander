@@ -16,14 +16,12 @@ namespace Input.InputControllers.Action
             inputAction = GetComponent<PlayerInputActionsWrapper>().GetPlayerInputActions();
             inputAction.Action.Interact.performed += OnActionPressed;
             inputAction.Action.Interact.canceled += OnActionReleased;
-            inputAction.Action.Drop.performed += OnDropPressed;
         }
 
         private void OnDisable()
         {
             inputAction.Action.Interact.performed -= OnActionPressed;
             inputAction.Action.Interact.canceled -= OnActionReleased;
-            inputAction.Action.Drop.performed -= OnDropPressed;
         }
 
         private void OnActionPressed(InputAction.CallbackContext context)

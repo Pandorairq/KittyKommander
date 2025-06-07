@@ -1,12 +1,11 @@
 using System;
 using Input.InputControllers.Action;
+using Input.InputControllers.InventoryInput;
 using UnityEngine;
 
 public class Inventory : MonoBehaviour
 {
     [SerializeField] private int inventorySize;
-    [SerializeField] private ActionController actionController;
-    
     public InventoryItem[] items;
     private int activeSlot;
 
@@ -15,7 +14,6 @@ public class Inventory : MonoBehaviour
         items = new InventoryItem[inventorySize];
         activeSlot = 0;
     }
-
     public void AddItem(InventoryItem item)
     {
         DropCurrentItem();
@@ -34,6 +32,11 @@ public class Inventory : MonoBehaviour
     {
         items[activeSlot]?.Store();
         activeSlot = (activeSlot + amount) % inventorySize;
+        while (activeSlot < 0)
+        {
+            activeSlot += inventorySize;
+        }
+        print(activeSlot);
         items[activeSlot]?.Hold();
     }
 
@@ -46,5 +49,10 @@ public class Inventory : MonoBehaviour
     public int GetInventorySize()
     {
         return inventorySize;
+    }
+
+    public int GetActiveSlot()
+    {
+        return activeSlot;
     }
 }
