@@ -72,7 +72,7 @@ namespace Movement.States
 
         public override int GetStateID()
         {
-            return 1;
+            return 2;
         }
     }
 }
