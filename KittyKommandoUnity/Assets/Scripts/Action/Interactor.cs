@@ -8,11 +8,9 @@ namespace Action
     public class Interactor : MonoBehaviour
     {
         [SerializeField] private float interactionRadius;
-        [SerializeField] private LayerMask interactionLayer;
         [SerializeField] private Interactable currentInteractable;
         private List<Interactable> interactables = new ();
-
-
+        
         private void Update()
         {
             Interactable nearest = null;
@@ -64,7 +62,6 @@ namespace Action
         public void OnTriggerEnter2D(Collider2D other)
         {
             var interactable = other.GetComponent<Interactable>();
-            print("test");
             if (interactable)
             {
                 print("Hi");

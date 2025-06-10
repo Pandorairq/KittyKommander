@@ -6,6 +6,16 @@ namespace Input.InputControllers.InventoryInput
     public abstract class InventoryController: MonoBehaviour
     {
         public UnityEvent onDropItem;
-        public UnityEvent<int> onSlotChange;
+        protected int slotChange;
+        protected Vector2 activeItemPosition;
+        public int GetSlotChange()
+        {
+            return slotChange;
+        }
+
+        public Vector2 GetActiveItemPosition()
+        {
+            return activeItemPosition;
+        }
     }
 }

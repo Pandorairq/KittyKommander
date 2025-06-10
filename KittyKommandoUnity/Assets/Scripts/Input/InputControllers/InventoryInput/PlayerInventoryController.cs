@@ -10,8 +10,17 @@ namespace Input.InputControllers.InventoryInput
         
         public void Update()
         {
-            var x = inputAction.Inventory.ScrollSlots.ReadValue<float>();
-            onSlotChange.Invoke((int) x);
+            slotChange = (int) inputAction.Inventory.ScrollSlots.ReadValue<float>();
+            
+            var itemPosition = inputAction.Inventory.ItemPosition.ReadValue<Vector2>();
+            if (itemPosition.magnitude > 1) // mouseInput needs to be transformed but its buggy in bottom left corner
+            {
+                var screenPosOfPlayer= Camera.main.WorldToScreenPoint(transform.position);
+                itemPosition -= (Vector2) screenPosOfPlayer;
+                itemPosition = itemPosition.normalized;
+            }
+
+            activeItemPosition = itemPosition;
         }
 
         private void OnEnable()

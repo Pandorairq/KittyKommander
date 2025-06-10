@@ -10,7 +10,7 @@ namespace BehaviorComponents
         [SerializeField] private KeyColor keyColor;
         public void Unlock(Interactor interactor)
         {
-            var items = interactor.GetComponent<Inventory>().GetItems();
+            var items = interactor.GetComponent<Inventory.Inventory>().GetItems();
             foreach (var item in items)
             {
                 var keyComponent = item?.GetComponent<Key>();

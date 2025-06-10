@@ -1,11 +1,9 @@
-using UnityEngine;
-using System.Collections.Generic;
-using UnityEngine.InputSystem;
-using Movement.States;
-using Movement;
 using FishNet.Object;
+using Movement;
+using Movement.States;
+using UnityEngine;
 
-namespace Movement.States
+namespace Environment
 {
     public class MovingPlatform : NetworkBehaviour
     {

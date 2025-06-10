@@ -1,7 +1,7 @@
-using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine;
 
-namespace Movement.States
+namespace Environment
 {
     public class ConditionalMovingPlatform : MovingPlatform
     {

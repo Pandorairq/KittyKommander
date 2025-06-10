@@ -145,7 +145,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""c692276d-37cc-4775-a5d1-0e14b997fdff"",
-                    ""path"": ""<Gamepad>/leftStick"",
+                    ""path"": ""<Gamepad>/leftStick/x"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -200,7 +200,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""ac36d994-497d-4db8-b3d9-2d1df39c707e"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""path"": ""<Gamepad>/buttonWest"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -270,6 +270,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ItemPosition"",
+                    ""type"": ""Value"",
+                    ""id"": ""50fad5c9-1504-4997-89fa-ba53d7f1a791"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -338,6 +347,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Drop Item"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f3e46af3-4e02-4fc1-88c4-27880930b406"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8d40191-8923-46d4-8344-8a9637c9b9e9"",
+                    ""path"": ""<Gamepad>/rightStick"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ItemPosition"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -356,6 +387,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Inventory = asset.FindActionMap("Inventory", throwIfNotFound: true);
         m_Inventory_ScrollSlots = m_Inventory.FindAction("Scroll Slots", throwIfNotFound: true);
         m_Inventory_DropItem = m_Inventory.FindAction("Drop Item", throwIfNotFound: true);
+        m_Inventory_ItemPosition = m_Inventory.FindAction("ItemPosition", throwIfNotFound: true);
     }
 
     ~@PlayerInputActions()
@@ -654,6 +686,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<IInventoryActions> m_InventoryActionsCallbackInterfaces = new List<IInventoryActions>();
     private readonly InputAction m_Inventory_ScrollSlots;
     private readonly InputAction m_Inventory_DropItem;
+    private readonly InputAction m_Inventory_ItemPosition;
     /// <summary>
     /// Provides access to input actions defined in input action map "Inventory".
     /// </summary>
@@ -673,6 +706,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Inventory/DropItem".
         /// </summary>
         public InputAction @DropItem => m_Wrapper.m_Inventory_DropItem;
+        /// <summary>
+        /// Provides access to the underlying input action "Inventory/ItemPosition".
+        /// </summary>
+        public InputAction @ItemPosition => m_Wrapper.m_Inventory_ItemPosition;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -705,6 +742,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DropItem.started += instance.OnDropItem;
             @DropItem.performed += instance.OnDropItem;
             @DropItem.canceled += instance.OnDropItem;
+            @ItemPosition.started += instance.OnItemPosition;
+            @ItemPosition.performed += instance.OnItemPosition;
+            @ItemPosition.canceled += instance.OnItemPosition;
         }
 
         /// <summary>
@@ -722,6 +762,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @DropItem.started -= instance.OnDropItem;
             @DropItem.performed -= instance.OnDropItem;
             @DropItem.canceled -= instance.OnDropItem;
+            @ItemPosition.started -= instance.OnItemPosition;
+            @ItemPosition.performed -= instance.OnItemPosition;
+            @ItemPosition.canceled -= instance.OnItemPosition;
         }
 
         /// <summary>
@@ -820,5 +863,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnDropItem(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ItemPosition" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnItemPosition(InputAction.CallbackContext context);
     }
 }

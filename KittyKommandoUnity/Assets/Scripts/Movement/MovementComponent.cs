@@ -40,6 +40,7 @@ namespace Movement
             collisionDetection.CheckCollisions();
             EvaluateInput();
             state.Update(this, Time.fixedDeltaTime);
+            print(state);
         }
         
         

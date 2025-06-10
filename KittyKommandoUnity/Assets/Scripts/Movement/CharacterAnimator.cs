@@ -1,18 +1,21 @@
 using UnityEngine;
 
-public class CharacterAnimator : MonoBehaviour
+namespace Movement
 {
-    private Animator anim;
-
-    private void Awake()
+    public class CharacterAnimator : MonoBehaviour
     {
-        anim = GetComponent<Animator>();
-        if (anim == null)
-            Debug.LogError("Animator component missing on this GameObject!");
-    }
+        private Animator anim;
 
-    public void UpdateAnimationState(Movement.States.MovementState state)
-    {
-        anim.SetInteger("State", state.GetStateID());
+        private void Awake()
+        {
+            anim = GetComponent<Animator>();
+            if (anim == null)
+                Debug.LogError("Animator component missing on this GameObject!");
+        }
+
+        public void UpdateAnimationState(Movement.States.MovementState state)
+        {
+            anim.SetInteger("State", state.GetStateID());
+        }
     }
 }
