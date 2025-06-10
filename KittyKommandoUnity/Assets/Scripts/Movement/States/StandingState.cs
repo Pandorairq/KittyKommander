@@ -40,6 +40,7 @@ namespace Movement.States
         public override void OnStateEnter(MovementComponent movementComponent)
         {
             Vector3 pos = movementComponent.transform.position;
+            movementComponent.ResetVerticalVelocity();
             movementComponent.transform.position = new Vector3(pos.x, MathF.Round(pos.y), pos.z);
         }
 

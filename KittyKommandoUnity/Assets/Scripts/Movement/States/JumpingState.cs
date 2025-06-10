@@ -6,13 +6,13 @@ namespace Movement.States
 {
     public class JumpingState : InAirState
     {
-        public JumpingState(Vector3 moveMoveDirection)
+        public JumpingState(Vector3 moveDirection)
         {
-            MoveDirection = moveMoveDirection;
+            MoveDirection = moveDirection;
         }
-        public JumpingState(Vector3 moveMoveDirection, Vector3 currentExternalForce)
+        public JumpingState(Vector3 moveDirection, Vector3 currentExternalForce)
         {
-            MoveDirection = moveMoveDirection;
+            MoveDirection = moveDirection;
             ExternalForce = currentExternalForce;
         }
         public override MovementState HandleInput(MovementComponent movementComponent, MovementData movementData)
@@ -35,8 +35,8 @@ namespace Movement.States
         public override void OnStateEnter(MovementComponent movementComponent)
         {
             gravity = movementComponent.GetGravity();
-            MoveDirection += Vector3.up * movementComponent.GetJumpHeight();
-
+            movementComponent.Move(Vector3.up * movementComponent.GetJumpHeight());
+            //MoveDirection += Vector3.up * movementComponent.GetJumpHeight();
         }
 
         public override void OnStateExit(MovementComponent movementComponent)

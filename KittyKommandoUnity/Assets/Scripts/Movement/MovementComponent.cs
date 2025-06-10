@@ -58,8 +58,14 @@ namespace Movement
         public void Move(Vector3 direction)
         {
             //r.linearVelocity = new Vector3(direction.x * movementSpeed, direction.y * inAirSpeed, direction.z * movementSpeed);
-            r.MovePosition(r.position + new Vector2(direction.x * movementSpeed, direction.y * inAirSpeed));
+            //r.MovePosition(r.position + new Vector2(direction.x * movementSpeed, direction.y * inAirSpeed));
+            r.AddForce(new Vector3(direction.x * movementSpeed, direction.y * inAirSpeed, direction.z * movementSpeed));
             //   transform.Translate(new Vector3(direction.x * movementSpeed, direction.y, direction.z * movementSpeed) * deltaTime,Space.World);
+        }
+
+        public void ResetVerticalVelocity()
+        {
+            r.linearVelocityY = 0;
         }
     
         public MovementState GetState()

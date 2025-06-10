@@ -43,8 +43,9 @@ namespace Movement.States
         public override void Update(MovementComponent movementComponent, float deltaTime)
         {
             ViewDirection = MoveDirection.x;
-            MoveDirection += Vector3.down * (gravity * deltaTime);
-            movementComponent.Move(MoveDirection + ExternalForce);
+            var moveDirection = MoveDirection + Vector3.down * (gravity * deltaTime);
+            
+            movementComponent.Move(moveDirection + ExternalForce);
             MoveDirection.x = 0;
         }
         public Vector3 GetDirection()
